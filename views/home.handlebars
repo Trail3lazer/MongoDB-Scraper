@@ -1,0 +1,25 @@
+<div class="container-fluid d-inline-flex">
+  <div class="list-group col-7" id="articles">
+    {{#each articles}}
+    <div class="list-group-item list-group-item-action" data-id={{_id}}>
+      <div class="row">
+        <div class="image container col-5">
+          <img src={{img}} alt={{title}} class="img-fluid" />
+        </div>
+        <div class="text container col-7">
+          <strong class="container-fluid text-center">{{title}}</strong>
+          <hr />
+          <text>{{body}}</text>
+          <div class="row ml-5">
+            <a class="btn btn-link p-1" href="http://www.nfl.com/{{link}}">Read</a>
+            <small class= "p-2">{{date}}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+  <div class="container col-4" id="notes"></div>
+</div>
+
+<script src="app.js"></script>
