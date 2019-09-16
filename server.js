@@ -42,7 +42,7 @@ app.get('/*', (req, res)=> {
 })
 
 // Start the server
-var PORT = 3000;
+var PORT = process.env.PORT || 3000;
 app.listen(PORT, function () {
   console.log("App running on port http://localhost:" + PORT + "/ !");
 });
