@@ -3,18 +3,13 @@ var cheerio = require("cheerio");
 
 async function scrape(db, res) {
 
-    const browser = await puppeteer.launch({
-      args: [
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
-      ],
-    }); 
+    const browser = await puppeteer.launch(); 
     const page = await browser.newPage();
     await page.goto("http://www.nfl.com/news");
 
     await setTimeout(()=>{},  15000);
     let bodyHTML = await page.evaluate(() => document.body.innerHTML);
-  
+    
     var $ = cheerio.load(bodyHTML);
   
   
@@ -33,13 +28,14 @@ async function scrape(db, res) {
       result.body = $(element).find("p")
         .text().slice(0, -4).trim()
       
+        console.log(result)
 
-      // // Make sure that the article isn't already saved
-      // if (
-      //   db.Article.findOne({title: result.title}).then(
-      //     (response)=>{if(response){return true;
-      //   }})
-      // ){return true;};
+      // Make sure that the article isn't already saved
+      if (
+        db.Article.findOne({title: result.title}).then(
+          (response)=>{if(response){return true;
+        }})
+      ){return true;};
       
       // Create a new Article using the `result` object built from scraping
       db.Article.create(result)
