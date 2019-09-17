@@ -17,7 +17,7 @@ async function scrape(db, res) {
     var $ = cheerio.load(bodyHTML);
   
   
-    $("div.news-stream-module").each(function (i, element) {
+    $("div.news-stream-module").each((i, element) => {
       var result = {};
   
       // Add the text and href of every link, and save them as properties of the result object
@@ -31,26 +31,32 @@ async function scrape(db, res) {
         .text();
       result.body = $(element).find("p")
         .text().slice(0, -4).trim()
-      
-        console.log(result)
 
-      // Make sure that the article isn't already saved
-      if (
-        db.Article.findOne({title: result.title}).then(
-          (response)=>{if(response){return true;
-        }})
-      ){return true;};
+      // // Make sure that the article isn't already saved /// ---broken ----always returns true
+      // let duplicate;
+      //   if (
+      //     db.Article.findOne({title: result.title},
+      //     (err, scopedDuplicate)=>{
+      //       if (err) console.log(err);
+      //       if(!scopedDuplicate===undefined){
+      //         duplicate = scopedDuplicate;
+      //         return true;
+      //         }
+      //       }
+      //     )
+      //   ){console.log("found duplicate " + duplicate);}
+     
       
       // Create a new Article using the `result` object built from scraping
-      db.Article.create(result)
-        .then(function (dbArticle) {
+      
+        db.Article.create(result, function (err, dbArticle) {
+          if(err) console.log(err);
+
           // View the added result in the console
-          return true;
+          console.log(dbArticle)
+          return dbArticle;
         })
-        .catch(function (err) {
-          // If an error occurred, log it
-          console.log(err);
-        });
+      
     });
   
     await browser.close();
