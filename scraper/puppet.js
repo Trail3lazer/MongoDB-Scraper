@@ -34,12 +34,12 @@ async function scrape(db, res) {
         .text().slice(0, -4).trim()
       
 
-      // Make sure that the article isn't already saved
-      if (
-        db.Article.findOne({title: result.title}).then(
-          (response)=>{if(response){return true;
-        }})
-      ){return true;};
+      // // Make sure that the article isn't already saved
+      // if (
+      //   db.Article.findOne({title: result.title}).then(
+      //     (response)=>{if(response){return true;
+      //   }})
+      // ){return true;};
       
       // Create a new Article using the `result` object built from scraping
       db.Article.create(result)
