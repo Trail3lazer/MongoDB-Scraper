@@ -12,7 +12,7 @@ var axios = require('axios');
 var db = require("./models");
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/NFL-Headlines";
 console.log(MONGODB_URI)
-mongoose.connect(MONGODB_URI/*, { useNewUrlParser: true ,useUnifiedTopology: true}*/);
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true ,useUnifiedTopology: true});
 
 // Initialize Express
 
