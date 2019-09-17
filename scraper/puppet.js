@@ -34,7 +34,7 @@ async function scrape(db, res) {
     result.body = $(element).find("p")
       .text().slice(0, -4).trim()
 
-    // Make sure that the article isn't already saved /// ---broken ----always returns true
+    // Make sure that the article isn't already saved
 
     await db.Article.findOne({ title: result.title },
       (err, duplicate) => {
