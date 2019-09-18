@@ -1,5 +1,6 @@
 //my_modules
-var api = require("./routes/apiRoutes.js");
+var api = require("./routes/apiRoutes");
+var htmlRoutes = require("./routes/htmlRoutes")
 
 //node_mods
 var express = require("express");
@@ -33,13 +34,9 @@ app.use(express.static("public"));
 
 // Routes
 
-api(app, db)
+api(app, db);
+htmlRoutes(app, db);
 
-app.get('/*', (req, res)=> {
-    db.Article.find().then((articles)=>{
-      res.render("home", {articles:articles})
-  }).catch(err => {throw err})
-})
 
 // Start the server
 var PORT = process.env.PORT || 3000;

@@ -5,9 +5,8 @@ const api = (app, db) => {
     //Scraper
     app.get("/api/scrape", async function (req, res) {
         
-        await scraper(db, res).then((data)=>{
-            console.log(data)
-            res.json(data)
+        await scraper(db).then((data)=>{
+            res.redirect('back');
         })
 
     });
@@ -61,6 +60,32 @@ const api = (app, db) => {
                 res.json(err);
             });
     });
+
+    app.post('/api/articles/fave/:id', (req, res) => {
+        let fave = req.body['favorite']
+        if(fave !== "false"){
+            db.Article.updateOne({ _id: req.params.id },
+                { $set:{favorite: false}}, 
+                [{upsert: true}, {setDefaultsOnInsert: true}] )
+            .then(function (dbArticle) {
+                // If we were able to successfully update an Article, send it back to the client
+                console.log("Set not fave")
+
+                res.json(dbArticle);
+            })
+        }else{
+            db.Article.updateOne({ _id: req.params.id },
+                { $set:{favorite: true}})
+            .then(function (dbArticle) {
+                console.log("Set fave")
+                // If we were able to successfully update an Article, send it back to the client
+                res.json(dbArticle);
+            })
+        };
+
+    })
+
+    
 
 }
 

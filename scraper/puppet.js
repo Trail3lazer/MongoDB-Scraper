@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 var cheerio = require("cheerio");
 
-async function scrape(db, res) {
+async function scrape(db) {
 
   const browser = await puppeteer.launch(
     {
@@ -33,6 +33,7 @@ async function scrape(db, res) {
       .text();
     result.body = $(element).find("p")
       .text().slice(0, -4).trim()
+    result.favorite = false;
 
     // Make sure that the article isn't already saved
 

@@ -1,7 +1,7 @@
 <div class="container-fluid d-inline-flex">
   <div class="list-group col-7" id="articles">
     {{#each articles}}
-    <div class="list-group-item list-group-item-action" data-id={{_id}}>
+    <div class="list-group-item list-group-item-action" data-fave="{{favorite}}" data-id="{{_id}}">
       <div class="row">
         <div class="image container col-5">
           <img src={{img}} alt={{title}} class="img-fluid" />
@@ -11,8 +11,15 @@
           <hr />
           <text>{{body}}</text>
           <div class="row ml-5">
-            <a class="btn btn-link p-1" href="http://www.nfl.com/{{link}}">Read</a>
-            <small class= "p-2">{{date}}</small>
+            <a class="btn btn-link py-1 px-2" href="http://www.nfl.com/{{link}}">Read</a>
+            <small class= "px-2 pt-2">{{date}}</small>
+            <div class="pt-1 favoriteIcon text-warning" id="{{_id}}-fave" >
+              {{#if favorite}}
+                <i class="fas fa-star"></i>
+              {{else}}
+                <i class="far fa-star"></i>
+              {{/if}}
+            </div>
           </div>
         </div>
       </div>
