@@ -71,15 +71,35 @@ const noteFiller = (data) => {
 
   };
 
-  $("#notes").append("<input class='form-control' id='titleinput' name='title' >");
-  $("#notes").append("<textarea class='form-control' id='bodyinput' name='body'></textarea>");
+  let string = `Super Bowl Championship:
+  XLVIII
+  
+  NFC Championships:
+  2005, 2013, 2014
+  
+  AFC Western Division Championships:
+  1988, 1999
+  
+  NFC West Division Championships:
+  2004, 2005, 2006, 2007, 2010, 2013, 2014
+  
+  All-Time Record:
+  (At Start of 2017 Season)
+  341-333-0
+  
+  Retired Uniform Numbers:
+  #12 (fans/the twelfth man)
+  #80 Steve Largent`;
+
+  $("#notes").append("<input class='form-control' id='titleinput' placeholder='Seahawks are the G.O.A.T.' name='title' >");
+  $("#notes").append(`<textarea class='form-control' id='bodyinput'placeholder="${string}" name='body'></textarea>`);
   $("#notes").append("<button class='form-control form-button' data-id='" + data._id + "' id='savenote'>Comment</button>");
   saveNote(data);
 };
 
-// Whenever someone clicks a p tag
-$(".list-group-item").click(function (e) {
-  // Save the id
+// Whenever someone clicks a comment btn
+$(".comment-btn").click(function (e) {
+  // get the id
   var thisId = $(this).data("id")
 
   // Now make an ajax call for the Article
@@ -88,6 +108,7 @@ $(".list-group-item").click(function (e) {
     url: "/api/articles/" + thisId,
     success: function (data) {
       noteFiller(data);
+      window.scrollTo(0, 0);
     }
   });
 });
@@ -100,6 +121,7 @@ $("#doTheScrape").click((e) => {
     url: "/api/scrape",
     success: function () {
       location.reload(true);
+
     }
   });
 })
